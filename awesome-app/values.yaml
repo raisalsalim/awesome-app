@@ -25,15 +25,28 @@ service:
   type: ClusterIP
   port: 3000
 
+#ingress:
+#  enabled: false
+#  className: ""
+#  annotations: {}
+#  hosts:
+#    - host: chart-example.local
+#      paths:
+#        - path: /
+#          pathType: ImplementationSpecific
+#  tls: []
+
 ingress:
-  enabled: false
-  className: ""
-  annotations: {}
+  enabled: true
+  className: "nginx"  # Replace with your Ingress class if using a different one
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"  # Set to "true" if you have TLS
   hosts:
-    - host: chart-example.local
+    - host: awesome-app.local  # Replace with your desired domain
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix  # Use "Prefix" for more common path handling
   tls: []
 
 resources: {}
